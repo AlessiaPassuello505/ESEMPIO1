@@ -17,29 +17,29 @@ class Fattura:
             f"="*60,
             f"Fattura n. {self.numero_fattura} del {self.data}",
             f"=" * 60,
-            f"Cliente: {self.ordine.cliente.name}",
+            f"Cliente: {self.ordine.cliente.nome}",
             f"Categoria: {self.ordine.cliente.categoria}",
-            f"Mail: {self.ordine.cliente.email}"
+            f"Mail: {self.ordine.cliente.mail}",
             f"=" * 60,
             f"DETTAGLIO ORDINE"
         ]
         for i,riga in enumerate(self.ordine.righe):
             linee.append(
-                f" {i}."
+                f" {i+1}."
                 f"{riga.prodotto.name}"
-                f"Quantità {riga.quantita} x {riga.prodotto.prezzo_unitario} ="
-                f"Tot. {riga.totale_riga()}"
+                f" Quantità {riga.quantita} x {riga.prodotto.prezzo_unitario} ="
+                f" Tot. {riga.totale_riga()}"
 
             )
-        linee.extend(f"=" * 60,
-                     f"Totale netto: {self.ordine.totale_netto()}",
-                     f"IVA(22%): {self.ordine.totale_netto()}",
-                     f"Totale lordo: {self.ordine.totale_lordo()}"
+        linee.extend([f"=" * 60,
+                     f"Totale netto: {self.ordine.totale_netto() }$",
+                     f"IVA(22%): {self.ordine.totale_netto()*0.22}",
+                     f"Totale lordo: {self.ordine.totale_lordo(0.22)} $",
                      f"=" * 60
-                )
+                ])
         return "\n".join(linee)
 
-    def _test_modulo():
+def _test_modulo():
         p1=ProdottoRecord("Laptop", 1200)
         p2=ProdottoRecord("Mouse", 20)
         p3=ProdottoRecord("Tablet", 600)
@@ -50,12 +50,12 @@ class Fattura:
             RigaOrdine(p2,5),
             RigaOrdine(p3,2)
         ] , cliente=cliente)
-        fattura=Fattura(ordine,"2026/01", date.today)
+        fattura=Fattura(ordine,"2026/01", date.today())
 
         print(fattura.genera_fattura())
 
-    if __name__=="__main__":
-        _test_modulo()
+if __name__=="__main__":
+    _test_modulo()
 
 
 
