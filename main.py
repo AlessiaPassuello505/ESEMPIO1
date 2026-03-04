@@ -1,59 +1,40 @@
-# Scriviamo un codice python che modelli un semplice
-# gestionale aziendale. Dovremo prvedere la possibilità di
-# definire entità che modellano i prodotti, i clienti,
-# offrire interfacce per calcolare i prezzi, eventualmente
-# scontati, ...
+from gestionale.vendite.ordini import Ordine, OrdineConSconto, RigaOrdine
+from gestionale.core.prodotti import Prodotto, crea_prodotto_standard, ProdottoRecord
+from gestionale.core.clienti import Cliente, ClienteRecord
 
-class Prodotto:
-    aliquota_iva = 0.22 #variabile di classe -- ovvero è la stessa per tutte le istanze che verranno create.
+p1=Prodotto(name="ebook",price=120, quantity=1, supplier="AAA" )
+p2=crea_prodotto_standard(nome="tablet", prezzo=750)
+print("=========================================0")
+print(p1)
+print(p2)
+print("======================================================")
 
-    def __init__(self, name: str, price: float, quantity: int, supplier = None):
-        self.name = name
-        self.price = price
-        self.quantity = quantity
-        self.supplier = supplier
 
-    def valore_netto(self):
-        return self.price*self.quantity
+c1=Cliente(nome="Mario Rossi", mail="marioross@example.com", categoria="Gold" )
 
-    def valore_lordo(self):
-        netto = self.valore_netto()
-        lordo = netto*(1+self.aliquota_iva)
-        return lordo
+cliente1=ClienteRecord("Mario Rossi", "marioross@example.com", "Gold")
+p1=ProdottoRecord("Laptotp", 1200.0)
+p2=ProdottoRecord("Mouse", 20)
+ordine=Ordine([RigaOrdine(p1,2), RigaOrdine(p2,10)], cliente1)
+ord_scontato=OrdineConSconto([RigaOrdine(p1,2), RigaOrdine(p2,10)], cliente1,0.1)
 
-    @classmethod
-    def costruttore_con_quantità_uno(cls, name: str, price: float, supplier: str):
-        cls(name, price, 1, supplier)
+print(ordine)
+print(f"Numero righe ordine: {ordine.numero_righe()}")
+print(f"Totale netto: {ordine.totale_netto()}")
+print(f"Totale lordo (IVA 22%)  : {ordine.totale_lordo(0.22)}")
+print(ord_scontato)
+print(f"Totale netto sconto: {ord_scontato.totale_netto()}")
+print(f"Totale lordo scontato: {ord_scontato.totale_lordo(0.22)}")
 
-    @staticmethod
-    def applica_sconto(prezzo, percentuale):
-        return prezzo*(1-percentuale)
 
-myproduct1 = Prodotto(name = "Laptop", price = 1200.0, quantity=12, supplier="ABC")
+print("-------------------------------------------------------------")
 
-print(f"Nome prodotto: {myproduct1.name} - prezzo: {myproduct1.price}")
 
-print(f"Il totale lordo di myproduct1 è {myproduct1.valore_lordo()}") #uso un metodo di istanza
-p3 = Prodotto.costruttore_con_quantità_uno("Auricolari", 200.0, "ABC") #Modo per chiamare un metodo di classe.
-print(f"Prezzo scontato di myproduct1 {Prodotto.applica_sconto(myproduct1.price, 0.15)}")#Modo per chiamare un metodo statico.
 
-myproduct2 = Prodotto("Mouse", 10, 25, "CDE")
-print(f"Nome prodotto: {myproduct2.name} - prezzo: {myproduct2.price}")
 
-#Scrivere una classe Cliente che abbia i campi "nome", "email", "categoria" ("Gold", "Silver", "Bronze").
-#vorremmo che questa classe avesse un metodo che chiamiamo "descrizione"
-# che deve restituire una stringa formattata ad esempio
-#"Cliente Fulvio Bianchi (Gold) - fulvio@google.com"
 
-class Cliente:
-    def __init__(self, nome, mail, categoria):
-        self.nome = nome
-        self.mail = mail
-        self.categoria = categoria
 
-    def descrizione(self): #to_string
-        # "Cliente Fulvio Bianchi (Gold) - fulvio@google.com"
-        return f"Cliente {self.nome} ({self.categoria}) - {self.mail}"
 
-c1 = Cliente("Mario Bianchi", "mario.bianchi@polito.it", "Gold")
-print(c1.descrizione())
+
+
+
