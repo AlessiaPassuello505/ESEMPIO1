@@ -152,6 +152,12 @@ class ProdottoRecord:
     name:str
     prezzo_unitario:float
 
+    def __hash__(self):
+        return hash((self.name,self.prezzo_unitario))
+
+    def __str__(self):
+        return f"{self.name} -- {self.prezzo_unitario}"
+
 
 print(f"Il prezzo totale è: {calcola_totale(mylist)}")
 print("-----------------------------------------------")
