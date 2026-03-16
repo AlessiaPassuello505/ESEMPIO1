@@ -5,6 +5,9 @@ from gestionale.core.clienti import ClienteRecord
 from gestionale.core.prodotti import ProdottoRecord
 from gestionale.vendite.ordini import Ordine
 
+print("=============================================================")
+print("Liste")
+
 p1 = ProdottoRecord("Laptop", 1200.0)
 p2 = ProdottoRecord("Mouse", 20.0)
 p3 = ProdottoRecord("Auricolari", 250.0)
@@ -50,6 +53,9 @@ carrello_copia = carrello.copy() # shallow copy
 carrello_copia2 = copy.deepcopy(carrello) # deep copy, ovvero copio anche il contenuto
 
 # TUPLE
+print("=============================================================")
+print("Tuple")
+
 sede_principale = (45, 8) #lat e long della sede di torino
 sede_milano = (45, 9) #lat e long della sede di milano
 
@@ -75,6 +81,9 @@ tot, media, max, min = calcola_statistiche_carrello(carrello)
 
 # tot, *altri_campi = calcola_statistiche_carrello(carrello)
 print(tot)
+
+print("=============================================================")
+print("Set")
 
 #SET
 categorie = {"Gold", "Silver", "Bronze", "Gold"}
@@ -125,6 +134,9 @@ s.symmetric_difference(s1) #s ^s1, ovvero elementi di s non contenuti in s1 ed e
 s1.issubset(s) #se gli elementi di s1 sono contenuti in s
 s1.issuperset(s) # se gli elementi di s sono contenuti in s1
 s1.isdisjoint(s) # se gli elementi di s e quelli di s1 sono diversi
+
+print("=============================================================")
+print("Dizionari")
 
 #Dictionary
 catalogo = {
@@ -181,6 +193,10 @@ prezzi = {codice: prod.prezzo_unitario for codice,prod in catalogo.items()}
 # d.items() # restituisce le coppie.
 # key in d # condizione che verifica se key è presente nel diz
 
+print("=============================================================")
+print("Esercizio")
+
+
 """Esercizio live
 Per ciascuno dei seguenti casi, decidere quale struttura usare:"""
 
@@ -219,7 +235,7 @@ categorie_periodo.add("Gold")
 categorie_periodo.add("Bronze")
 
 print("=============================================================")
-
+print("Counter")
 #COUNTER
 lista_clienti = [
     ClienteRecord("Mario Rossi", "mario@polito.it", "Gold"),
@@ -270,8 +286,8 @@ vendite_gennaio["Laptop"] += 4
 print(f"Vendite Gennaio: {vendite_gennaio}")
 
 # metodi da ricordare
-c.most_common(n) #restituisce gli n elementi più frequenti
-c.total() # somma dei conteggi
+# c.most_common(n) #restituisce gli n elementi più frequenti
+# c.total() # somma dei conteggi
 
 #Defaultdicts
 
